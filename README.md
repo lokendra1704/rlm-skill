@@ -48,6 +48,7 @@ In general: if the user says "too large", "can’t paste", "big repo", "long log
 
 1. **Externalize context**: keep the source in files/repo; do not paste everything into chat.
 2. **Map first**: search/index to find the few sections that matter (`rg`, `git grep`, `rg --files`, `find`).
+   - If grep is insufficient (synonyms, domain-specific naming), use **semantic retrieval (vector embeddings)** to get candidate chunks, then verify with quotes/line references.
 3. **Delegate**: give each subagent exactly one snippet/chunk and a strict JSON+evidence output format.
 4. **Aggregate**: merge results into a single evidence ledger; note contradictions/gaps.
 5. **Recurse**: only dispatch follow-ups for missing evidence (new excerpt/new chunk).
@@ -64,8 +65,24 @@ python3 ~/.codex/skills/recursive-language-models/scripts/chunk_text.py path/to/
 
 For Claude Code, use the equivalent path under `~/.claude/skills/...`.
 
+## Code Splitter (Tree-sitter, Optional)
+
+If you are chunking **code**, prefer syntax-aware splitting (functions/classes) instead of raw character chunking:
+
+```bash
+python3 ~/.codex/skills/recursive-language-models/scripts/split_code_treesitter.py path/to/repo \
+  --out-dir out/code-chunks --force
+```
+
+If the script reports missing dependencies:
+
+```bash
+python3 -m pip install tree_sitter tree_sitter_languages
+```
+
 ## Where The Skill Lives
 
 - Skill entrypoint: `recursive-language-models/SKILL.md`
 - Helper script: `recursive-language-models/scripts/chunk_text.py`
+- Helper script: `recursive-language-models/scripts/split_code_treesitter.py`
 - Paper notes: `recursive-language-models/references/rlm-paper-summary.md`

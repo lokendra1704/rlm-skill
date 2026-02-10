@@ -1,4 +1,4 @@
 interface:
   display_name: "Recursive Language Models"
-  short_description: "Handle huge-context tasks using the RLM (tool + recursive subagent) workflow"
-  default_prompt: "Apply the Recursive Language Models workflow: keep full context on disk, map with tools, delegate chunk reading to subagents/agent teams, and synthesize with evidence."
+  short_description: "Handle huge-context tasks with RLM: tools + semantic retrieval + recursive subagents"
+  default_prompt: "Apply the Recursive Language Models workflow: keep full context on disk, map with grep and/or semantic retrieval (embeddings), split code with tree-sitter when chunking, delegate snippet reading to subagents/agent teams, and synthesize with evidence."
